@@ -36,7 +36,7 @@ def get_session():
     if proc.returncode:
         logging.debug('Not logged into Bitwarden')
         operation = 'login'
-        credentials = ["{}".format(raw_input('Bitwarden user: '))]
+        credentials = ["{}".format(input('Bitwarden user: '))]
     else:
         logging.debug('Bitwarden vault is locked')
         operation = 'unlock'
@@ -100,7 +100,7 @@ def build_simple_entries(items):
         try:
             se.addresses = list(filter(lambda x: x is not None, map(lambda entry: entry['uri'], item['login']['uris'])))
         except:
-            continue
+            se.addresses = []
         try:
             se.password = item['login']['password']
         except:
