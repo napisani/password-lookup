@@ -1,3 +1,4 @@
+
 from provider.bitwarden_store import BitwardenStore
 from provider.keepass_store import KeepassStore
 from colorama import init, Back, Style
@@ -25,7 +26,7 @@ def filter_entries(store, search=''):
 
 def paint(search='', entries=[], idx=0):
     screen_clear()
-    print ('Search: ' + search)
+    print('Search: ' + search)
     for x, entry in enumerate(entries):
         if x == idx:
             print(Back.MAGENTA + str(entry) + Style.RESET_ALL)
@@ -92,5 +93,5 @@ if __name__ == '__main__':
     filter_entries(store)
     entry = start_input_loop(store)
     if entry is not None:
-        print 'copied password!'
+        print('copied password!')
         pyperclip.copy(entry.password)

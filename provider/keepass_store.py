@@ -1,11 +1,11 @@
-from simple_entry import SimpleEntry
-from store_provider import StoreProvider
+from provider.simple_entry import SimpleEntry
+from provider.store_provider import StoreProvider
 import libkeepass
-from session import Session
+from provider.session import Session
 import logging
 import sys
 import getpass
-
+from os import path
 
 class KeepassStore(StoreProvider):
     def __init__(self, kee_pass_file, clear_session=False):
@@ -15,12 +15,9 @@ class KeepassStore(StoreProvider):
         self.session.load()
         self.entries = None
         self.kee_pass_file = kee_pass_file
-        try:
-            with open(self.kee_pass_file) as f:
-                f.read()
-        except IOError as ex:
+        if not path.exists(kee_pass_file):
             logging.error('failed to open keepass file' + str(kee_pass_file))
-            raise ex
+            raise IOError('keepass file does not exist')
 
     def _session_is_established(self):
         if self.session.session is None or self.session.session == '':
@@ -50,11 +47,11 @@ class KeepassStore(StoreProvider):
                                     simple_entry.name = val
                         if simple_entry.name is not None and simple_entry.password is not None:
                             self.entries.append(simple_entry)
-            except CredentialsError as e:
-                print 'wrong password'
-                self.session.session = ''
+            # except CredentialsError as e:
+            #     print('wrong password')
+            #     self.session.session = ''
             except:
-                print "Unexpected error:", sys.exc_info()[0]
+                print("Unexpected error:", sys.exc_info()[0])
                 raise
 
     def get_and_cache_simple_entries(self):

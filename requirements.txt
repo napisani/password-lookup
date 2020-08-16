@@ -2,6 +2,7 @@ argon2-cffi==20.1.0
 cffi==1.14.1
 colorama==0.4.3
 construct==2.10.54
+cryptography==3.0
 enum34==1.1.10
 future==0.18.2
 ipaddress==1.0.23

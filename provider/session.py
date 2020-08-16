@@ -1,19 +1,14 @@
-from simplecrypt import encrypt, decrypt
+import time
+
+time.clock = time.process_time
 import os
 import sys
-import random
-import string
 import logging
+from provider.crypt_util import CryptUtil
 
 
 def get_script_path():
     return os.path.dirname(os.path.realpath(sys.argv[0]))
-
-
-def get_random_string(length):
-    letters = string.ascii_lowercase
-    result_str = ''.join(random.choice(letters) for i in range(length))
-    return result_str
 
 
 def get_key_filename(key_suffix):
@@ -26,8 +21,10 @@ def remove_key_file(key_suffix):
 
 
 def get_key(key_suffix):
+    if not os.path.exists(get_key_filename(key_suffix)):
+        return generate_key(key_suffix)
     try:
-        with open(get_key_filename(key_suffix)) as key_file:
+        with open(get_key_filename(key_suffix), 'rb') as key_file:
             return key_file.readline()
     except IOError:
         return generate_key(key_suffix)
@@ -35,7 +32,8 @@ def get_key(key_suffix):
 
 def generate_key(key_suffix):
     logging.debug('generating key')
-    key = get_random_string(256)
+    cu = CryptUtil()
+    key = cu.generate_key()
     with open(get_key_filename(key_suffix), "wb") as key_file:
         key_file.write(key)
     return key
@@ -68,18 +66,23 @@ class Session:
         self.session = session
 
     def write(self):
-        with open(self.get_session_file(), "w") as f:
+        with open(self.get_session_file(), "wb") as f:
+            cu = CryptUtil()
             key = get_key(self.key_suffix)
-            f.write(encrypt(key, self.session.encode()))
+            f.write(cu.encrypt_str(self.session, key))
 
     def read(self):
-        try:
-            with open(self.get_session_file()) as f:
-                key = get_key(self.key_suffix)
-                logging.debug('decrypting with key ' + key)
-                self.session = decrypt(key, f.readline()).decode()
-                # Do something with the file
-        except IOError:
-            logging.debug("read File not accessible")
+        if not os.path.exists(self.get_session_file()):
             self.session = ''
+        else:
+            try:
+                with open(self.get_session_file(), 'rb') as f:
+                    key = get_key(self.key_suffix)
+                    logging.debug('decrypting with key ' + str(key))
+                    cu = CryptUtil()
+                    self.session = cu.decrypt_bytes(f.read(), key)
+                    # Do something with the file
+            except IOError:
+                logging.debug("read File not accessible")
+                self.session = ''
         return self.session
