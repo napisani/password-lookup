@@ -1,5 +1,5 @@
 import unittest
-from session import Session
+from .session import Session
 
 
 class SessionTest(unittest.TestCase):

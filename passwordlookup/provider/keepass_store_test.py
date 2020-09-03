@@ -1,5 +1,6 @@
 import unittest
-from keepass_store import KeepassStore
+
+from .keepass_store import KeepassStore
 
 
 class TestBitwardenStore(unittest.TestCase):
@@ -9,6 +10,7 @@ class TestBitwardenStore(unittest.TestCase):
         self.assertTrue(entries is not None)
         for entry in entries:
             print('items: {}'.format(entry))
+
 
 if __name__ == "__main__":
     unittest.main()

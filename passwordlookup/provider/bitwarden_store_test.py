@@ -1,5 +1,5 @@
 import unittest
-from bitwarden_store import BitwardenStore
+from .bitwarden_store import BitwardenStore
 
 
 class TestBitwardenStore(unittest.TestCase):

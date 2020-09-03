@@ -1,8 +1,7 @@
-
-from provider.bitwarden_store import BitwardenStore
-from provider.keepass_store import KeepassStore
+from .provider.bitwarden_store import BitwardenStore
+from .provider.keepass_store import KeepassStore
 from colorama import init, Back, Style
-from get_char import GetChar
+from .get_char import GetChar
 from os import system, name
 import logging
 import pyperclip
@@ -73,7 +72,7 @@ def start_input_loop(store):
         logging.debug('char_list' + str(char_list))
 
 
-if __name__ == '__main__':
+def main():
     init()
 
     parser = argparse.ArgumentParser(description='Password Lookup')
@@ -95,3 +94,7 @@ if __name__ == '__main__':
     if entry is not None:
         print('copied password!')
         pyperclip.copy(entry.password)
+
+
+if __name__ == '__main__':
+    main()

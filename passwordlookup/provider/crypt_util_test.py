@@ -1,5 +1,5 @@
 import unittest
-from provider.crypt_util import CryptUtil
+from .crypt_util import CryptUtil
 
 
 class CryptUtilTest(unittest.TestCase):

@@ -4,7 +4,7 @@ time.clock = time.process_time
 import os
 import sys
 import logging
-from provider.crypt_util import CryptUtil
+from .crypt_util import CryptUtil
 
 
 def get_script_path():
@@ -57,7 +57,12 @@ class Session:
         self._remove_session_file()
 
     def load(self):
-        self.session = self.read()
+        try:
+            self.session = self.read()
+        except:
+            logging.debug("error occurred reading existing session - clearing and retrying")
+            self.clear()
+            self.session = self.read()
 
     def get_session_file(self):
         return Session.session_file.format(self.session_suffix)

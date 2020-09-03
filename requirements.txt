@@ -1,17 +1,7 @@
-argon2-cffi==20.1.0
-cffi==1.14.1
 colorama==0.4.3
-construct==2.10.54
 cryptography==3.0
-enum34==1.1.10
-future==0.18.2
-ipaddress==1.0.23
 libkeepass==0.2.0
-lxml==4.5.2
 pycparser==2.20
 pycrypto==2.6.1
 pycryptodomex==3.9.8
 pyperclip==1.8.0
-python-dateutil==2.8.1
-simple-crypt==4.1.7
-six==1.15.0

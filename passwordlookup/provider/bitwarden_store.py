@@ -1,10 +1,10 @@
-from provider.simple_entry import SimpleEntry
-from provider.store_provider import StoreProvider
+from .simple_entry import SimpleEntry
+from .store_provider import StoreProvider
 import subprocess
 import json
 import logging
 import os
-from provider.session import Session
+from .session import Session
 import getpass
 
 SESSION_KEY = 'BW_SESSION'
