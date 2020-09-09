@@ -51,7 +51,7 @@ class KeepassStore(StoreProvider):
         while not self._session_is_established():
             try:
                 self.session.session = getpass.getpass(
-                    'Please enter your password for file: ' + str(self.kee_pass_file) + ": ")
+                    '\nPlease enter your password for file: ' + str(self.kee_pass_file) + ": ")
 
             # except CredentialsError as e:
             #     print('wrong password')

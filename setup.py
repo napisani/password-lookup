@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="passwordlookup",
-    version="0.0.1",
+    version="0.0.2",
     author="Nick Pisani",
     author_email="napisani@yahoo.com",
     description="password lookup utility for looking up keepass or bitwarden passwords via a terminal session",
